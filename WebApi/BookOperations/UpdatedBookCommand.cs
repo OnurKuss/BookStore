@@ -9,6 +9,7 @@ namespace WebApi.BookOperations
     public class UpdatedBookCommand
     {
         public UpdatedBookModel Model { get; set; }
+        public int BookId { get; set; }
 
         private readonly BookStoreDbContext _dbContext;
 
@@ -17,9 +18,9 @@ namespace WebApi.BookOperations
             _dbContext = dbContext;
         }
 
-        public void Handler(int id)
+        public void Handler()
         {
-            var book = _dbContext.Books.SingleOrDefault(x => x.Id == id);
+            var book = _dbContext.Books.SingleOrDefault(x => x.Id == BookId);
             if (book == null)
                 throw new InvalidOperationException("Güncelleme geçersiz");
 
