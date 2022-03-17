@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +13,13 @@ namespace WebApi.BookOperations
         public int BookId { get; set; }
 
         private readonly BookStoreDbContext _dbContext;
-        
-        public GetBooksIdQuery(BookStoreDbContext dbContext)
+
+        private readonly IMapper _mapper;
+
+        public GetBooksIdQuery(BookStoreDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public BookIdViewModel Handler()
@@ -24,13 +28,8 @@ namespace WebApi.BookOperations
             if (book == null)
                 throw new InvalidOperationException("Kitap Bulunamdı");
 
-            var getByBookId = new BookIdViewModel
-            {
-                Tittle = book.Tittle,
-                PageCount = book.PageCount,
-                Genre = ((GenreEnum)book.GenreId).ToString(),
-                PublishDate = book.PublishDate.Date.ToString("dd/MM/yyyy")
-            };
+            var getByBookId = _mapper.Map<BookIdViewModel>(book);
+            //};
             return getByBookId;
         }
     }

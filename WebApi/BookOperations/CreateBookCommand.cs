@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +12,12 @@ namespace WebApi.BookOperations
         public CreateBookModel Model { get; set; }
 
         private readonly BookStoreDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public CreateBookCommand(BookStoreDbContext dbContext)
+        public CreateBookCommand(BookStoreDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public void Handler()
@@ -23,11 +26,7 @@ namespace WebApi.BookOperations
             if (book!= null)
                 throw new InvalidOperationException("Kitap zaten mevcut");
 
-            book = new Book();
-            book.Tittle = Model.Tittle;
-            book.PublishDate = Model.PublishDate;
-            book.PageCount = Model.PageCount;
-            book.GenreId = Model.GenreId;
+            book = _mapper.Map<Book>(Model); //_mapper.Map(Model, book);           
 
             _dbContext.Books.Add(book);
             _dbContext.SaveChanges();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,17 @@ namespace WebApi.Controllers
     public class BookController : ControllerBase
     {
         private readonly BookStoreDbContext _context;
-
-        public BookController(BookStoreDbContext context)
+        private readonly IMapper _mapper;
+        public BookController(BookStoreDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetBooks()
         {
-            GetBooksQuery query = new GetBooksQuery(_context);
+            GetBooksQuery query = new GetBooksQuery(_context,_mapper);
             var result = query.Handler();
             return Ok(result);
         }
@@ -31,7 +33,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            GetBooksIdQuery query = new GetBooksIdQuery(_context);
+            GetBooksIdQuery query = new GetBooksIdQuery(_context,_mapper);
             try
             {
                 query.BookId = id;
@@ -48,7 +50,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            CreateBookCommand command = new CreateBookCommand(_context);
+            CreateBookCommand command = new CreateBookCommand(_context, _mapper);
             try
             {
                 command.Model = newBook;
