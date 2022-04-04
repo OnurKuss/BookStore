@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.DBOperations;
 
-namespace WebApi.BookOperations
+namespace WebApi.Applications.BookOperations
 {
     public class UpdatedBookCommand
     {

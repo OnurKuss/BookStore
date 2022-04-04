@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.DBOperations;
 
-namespace WebApi.BookOperations
+namespace WebApi.Applications.BookOperations
 {
     public class DeleteBookCommand
     {
-        public BookDeleteModel Model { get; set; }
         public int BookId { get; set; }
 
         private readonly BookStoreDbContext _dbContext;
@@ -26,13 +25,5 @@ namespace WebApi.BookOperations
             _dbContext.Books.Remove(deleteBook);
             _dbContext.SaveChanges();
         }
-    }
-
-    public class BookDeleteModel
-    {
-        public string Tittle { get; set; }
-        public int PageCount { get; set; }
-        public string PublishDate { get; set; }
-        public string Genre { get; set; }
     }
 }
