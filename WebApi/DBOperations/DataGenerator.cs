@@ -45,15 +45,15 @@ namespace WebApi.DBOperations
                 context.AddRange(
                     new Genre
                     {
-                        Name = "Personel Growth",
+                        Name = "Personel Growth"
                     },
                     new Genre
                     {
-                        Name = "Science Fiction",
+                        Name = "Science Fiction"
                     },
                     new Genre
                     {
-                        Name = "Noval",
+                        Name = "Noval"
                     });
 
                 context.Books.AddRange(
@@ -72,7 +72,7 @@ namespace WebApi.DBOperations
                     Tittle = "Herland",
                     GenreId = 2, //Science Fiction
                     AuthorId = 2,
-                    PageCount = 250, //
+                    PageCount = 250, 
                     PublishDate = new DateTime(2010, 08, 18)
                 },
                 new Book
